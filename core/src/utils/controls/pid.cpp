@@ -1,5 +1,5 @@
-#include "../core/include/utils/controls/pid.h"
-#include "../core/include/subsystems/odometry/odometry_base.h"
+#include "core/utils/controls/pid.h"
+#include "core/subsystems/odometry/odometry_base.h"
 
 /**
  * Create the PID object
@@ -34,6 +34,7 @@ double PID::update(double sensor_val) { return update(sensor_val, 0); }
 double PID::update(double sensor_val, double v_setpt) {
 
   this->sensor_val = sensor_val;
+  // printf("Error: %.2f\n", get_error());
 
   double time_delta = (pid_timer.systemHighResolution() / 1000000.0) - last_time;
 

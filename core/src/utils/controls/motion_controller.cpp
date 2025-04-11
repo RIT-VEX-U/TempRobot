@@ -1,5 +1,5 @@
-#include "../core/include/utils/controls/motion_controller.h"
-#include "../core/include/utils/math_util.h"
+#include "core/utils/controls/motion_controller.h"
+#include "core/utils/math_util.h"
 #include <vector>
 
 /**
@@ -12,7 +12,7 @@
  *    ff_cfg Definitions of kS, kV, and kA
  */
 MotionController::MotionController(m_profile_cfg_t &config)
-    : config(config), pid(config.pid_cfg), ff(config.ff_cfg), profile(config.max_v, config.accel) {}
+    : config(config), pid(config.pid_cfg), ff(config.ff_cfg), profile(0, 0, config.max_v, config.accel, config.accel) {}
 
 /**
  * @brief Initialize the motion profile for a new movement
@@ -21,7 +21,7 @@ MotionController::MotionController(m_profile_cfg_t &config)
  * @param end_pt Movement ending posiiton
  */
 void MotionController::init(double start_pt, double end_pt) {
-  profile.set_endpts(start_pt, end_pt);
+  profile = TrapezoidProfile(start_pt, end_pt, config.max_v, config.accel, config.accel);
   pid.reset();
   tmr.reset();
 }
@@ -37,7 +37,7 @@ double MotionController::update(double sensor_val) {
   pid.set_target(cur_motion.pos);
   pid.update(sensor_val, cur_motion.vel);
 
-  out = pid.get() + ff.calculate(cur_motion.vel, cur_motion.accel, pid.get());
+  out = pid.get() + ff.calculate(cur_motion.vel, cur_motion.acc, pid.get());
 
   if (lower_limit != upper_limit)
     out = clamp(out, lower_limit, upper_limit);
@@ -66,7 +66,7 @@ void MotionController::set_limits(double lower, double upper) {
  * confirms it is on target
  */
 bool MotionController::is_on_target() {
-  return (tmr.time(timeUnits::sec) > profile.get_movement_time()) && pid.is_on_target();
+  return (tmr.time(timeUnits::sec) > profile.total_time()) && pid.is_on_target();
 }
 
 /**
@@ -96,12 +96,12 @@ FeedForward::ff_config_t MotionController::tune_feedforward(TankDrive &drive, Od
                                                             double duration) {
   FeedForward::ff_config_t out = {};
 
-  pose_t start_pos = odometry.get_position();
+  Pose2d start_pos = odometry.get_position();
 
   // ========== kS Tuning =========
   // Start at 0 and slowly increase the power until the robot starts moving
   double power = 0;
-  while (odometry.pos_diff(start_pos, odometry.get_position()) < 0.05) {
+  while (start_pos.translation().distance(odometry.get_position().translation()) < 0.05) {
     drive.drive_tank(power, power, 1);
     power += 0.001;
     vexDelay(100);
