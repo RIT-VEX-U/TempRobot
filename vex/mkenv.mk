@@ -75,6 +75,7 @@ SHELL = cmd.exe
 MKDIR = md "$(@D)" 2> nul || :
 RMDIR = rmdir /S /Q
 CLEAN = $(RMDIR) $(BUILD) 2> nul || :
+TIME = TIME /T
 else
 # which flavor of linux
 UNAME := $(shell sh -c 'uname -sm 2>/dev/null || Unknown')
@@ -82,6 +83,7 @@ $(info unix build for platform $(PLATFORM) on $(UNAME))
 MKDIR = mkdir -p "$(@D)" 2> /dev/null || :
 RMDIR = rm -rf
 CLEAN = $(RMDIR) $(BUILD) 2> /dev/null || :
+TIME = date +%H:%M:%S
 endif
 
 # toolchain include and lib locations

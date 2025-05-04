@@ -41,8 +41,10 @@ SRC_A  = makefile
 # project header file locations
 INC_F  = include
 INC_F += core/include
+
 # build targets
 all: $(BUILD)/$(PROJECT).bin
+	$(ECHO) Time of Build: $(shell $(TIME))
 
 # include build rules
 include vex/mkrules.mk
