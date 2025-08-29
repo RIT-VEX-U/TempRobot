@@ -1,5 +1,23 @@
 {
+	"C_Cpp.default.configurationProvider": "ms-vscode.cmake-tools",
+	"cmake.buildDirectory": "${workspaceFolder}/build",
+	"cmake.sourceDirectory": "${workspaceFolder}",
+	"cmake.configureOnOpen": true,
+	"cmake.buildBeforeRun": true,
+	"cmake.generator": "Unix Makefiles",
+	"cmake.preferredGenerators": [
+		"Unix Makefiles"
+	],
+	"cmake.configureArgs": [
+		"-DCMAKE_TOOLCHAIN_FILE=${workspaceFolder}/VexV5Toolchain.cmake"
+	],
 	"C_Cpp.default.systemIncludePath": [
-		"${config:vexrobotics.vexcode.Cpp.Sdk.Home}/V5/V5_20240802_15_00_00/vexv5/gcc/include/sys"
-	]
+		"${config:vexrobotics.vexcode.Cpp.Sdk.Home}\\V5\\V5_20240802_15_00_00\\vexv5\\gcc\\include\\sys"
+	],
+	"C_Cpp.default.compilerPath": "",
+	"C_Cpp.default.compileCommands": "${workspaceFolder}/build/compile_commands.json",
+	"C_Cpp.intelliSenseEngine": "default",
+	"C_Cpp.errorSquiggles": "enabled",
+	"C_Cpp.autoAddFileAssociations": false,
+	"C_Cpp.default.browse.limitSymbolsToIncludedHeaders": true
 }

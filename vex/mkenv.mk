@@ -27,7 +27,7 @@ $(error Project name cannot contain whitespace: $(PROJECT))
 endif
 
 # SDK path passed from app
-# if not set then environmental variabled used
+# if not set then environment variables used
 ifeq ("$(origin T)", "command line")
 VEX_SDK_PATH = $(T)
 endif
@@ -99,7 +99,7 @@ CXX_FLAGS = ${CFLAGS_CL} ${CFLAGS_V7} -Os -Wall -Werror=return-type -fno-rtti -f
 # linker flags
 LNK_FLAGS = -nostdlib -T "$(VEX_SDK_PATH)/$(PLATFORM)/lscript.ld" -R "$(VEX_SDK_PATH)/$(PLATFORM)/stdlib_0.lib" -Map="$(BUILD)/$(PROJECT).map" --gc-section -L"$(VEX_SDK_PATH)/$(PLATFORM)" ${TOOL_LIB}
 
-# future statuc library
+# future static library
 PROJECTLIB = lib$(PROJECT)
 ARCH_FLAGS = rcs
 

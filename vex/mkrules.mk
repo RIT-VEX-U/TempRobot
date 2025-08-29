@@ -1,13 +1,13 @@
 # VEXcode mkrules.mk 2019_03_26_01
 
 # compile C files
-$(BUILD)/%.o: %.c $(SRC_H)
+$(BUILD)/CMakeFiles/$(PROJECT).dir/%.c.obj: %.c $(SRC_H)
 	$(Q)$(MKDIR)
 	$(ECHO) "CC  $<"
 	$(Q)$(CC) $(CFLAGS) $(INC) -c -o $@ $<
 	
 # compile C++ files
-$(BUILD)/%.o: %.cpp $(SRC_H) $(SRC_A)
+$(BUILD)/CMakeFiles/$(PROJECT).dir/%.cpp.obj: %.cpp $(SRC_H) $(SRC_A)
 	$(Q)$(MKDIR)
 	$(ECHO) "CXX $<"
 	$(Q)$(CXX) $(CXX_FLAGS) $(INC) -c -o $@ $<
