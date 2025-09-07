@@ -193,7 +193,7 @@ if ($NeedsConfigure) {
     $ConfigureArgs = @(
         "-B", $BuildDir,
         "-DVEX_PROJECT_NAME=$ProjectName",
-        "-G", "Unix Makefiles"
+        "-G", "Ninja"
     )
     
     if ($Quiet) {
@@ -292,11 +292,7 @@ if ($Upload) {
     }
     
     $ToolchainSubdir = if ($IsWindows -or $env:OS -eq "Windows_NT") { 
-        "toolchain_win32"
-    } elseif ($IsMacOS) { 
-        "toolchain_osx64"
-    } else { 
-        "toolchain_linux64"
+        "ATfE-20.1.0-Windows-x86_64"
     }
     
     $VexToolchainPath = Join-Path $VexGlobalDir $ToolchainSubdir

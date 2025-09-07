@@ -2,8 +2,7 @@
 
 /**
  * Main entrypoint for the driver control period
-*/
+ */
 void opcontrol();
 
 void skills();
-
