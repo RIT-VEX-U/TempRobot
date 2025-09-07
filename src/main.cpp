@@ -1,6 +1,9 @@
 #include "vex.h"
 
-#include <cmath>
+#include "robot-config.h"
+
+#include "competition/autonomous.h"
+#include "competition/opcontrol.h"
 
 vex::competition comp;
 
@@ -10,19 +13,8 @@ vex::competition comp;
  * competition/autonomous.cpp
  */
 int main() {
-  vex::brain brain = vex::brain();
+  comp.autonomous(autonomous);
+  comp.drivercontrol(opcontrol);
 
-  // auto const ints = {0, 1, 2, 3, 4, 5};
-  // auto even = [](int i) { return 0 == i % 2; };
-  // auto square = [](int i) { return i * i; };
-  //
-  // for (int i : ints | std::views::filter(even) | std::views::transform(square))
-  //   brain.Screen.print("%d ", i);
-
-  brain.Screen.print("aweoifj\n");
-
-  double x = 2.0;
-  double cosx = std::cos(x);
-
-  brain.Screen.print("helloa %f\n", cosx);
+  robot_init();
 }
